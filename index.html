@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Node Zero</title>
+        <link href="src/input.css" rel="stylesheet" />
+        <link
+            href="https:fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+            rel="stylesheet"
+        />
+
+        <!-- Hidden Scrollbars -->
+        <style>
+            .hide-scrollbar::-webkit-scrollbar {
+                display: none;
+            }
+            .hide-scrollbar {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+        </style>
+    </head>
+
+    <body class="bg-[#1A1B26] text-white">
+        <!-- Hidden Configuration Button -->
+        <div class="fixed top-8 right-8 group z-50 p-2">
+            <button
+                id="edit-btn"
+                role="switch"
+                class="relative inline-flex h-6 w-15 p-1 items-center rounded-full bg-[#24283B] transition-all duration-300 opacity-0 group-hover:opacity-100"
+            >
+                <span
+                    id="edit-thumb"
+                    class="inline-flex items-center h-4 w-5 translate-x-0 justify-center rounded-full bg-[#C0CAF5] transition-transform duration-300 ease-in-out"
+                >
+                </span>
+            </button>
+        </div>
+
+        <main
+            id="main-content"
+            class="transition-all duration-300 ease-in-out min-h-screen flex flex-col justify-center items-center w-full relative"
+        >
+            <section
+                id="section-statuses"
+                class="flex flex-wrap justify-center gap-4 mb-14 px-4 w-full max-w-3xl shrink-0"
+            >
+                <div
+                    class="status-widget relative bg-[#24283B] rounded-2xl p-4 flex flex-col items-center min-w-[140px]"
+                >
+                    <span
+                        class="text-[10px] font-bold uppercase tracking-widest mb-1"
+                        >startpage</span
+                    >
+                    <h1
+                        class="text-xl font-semibold tracking-wide whitespace-nowrap"
+                    >
+                        Node Zero
+                    </h1>
+                    <button
+                        class="status-delete-btn hidden absolute -top-2 -right-2 w-6 h-6 rounded-full bg-[#FF5555] text-white text-xs font-bold hover:scale-110 transition z-10"
+                    >
+                        ✕
+                    </button>
+                </div>
+
+                <div
+                    class="status-widget relative bg-[#24283B] rounded-2xl p-4 flex flex-col items-center min-w-[140px]"
+                >
+                    <span
+                        class="text-[10px] font-bold uppercase tracking-widest mb-1"
+                        >greetings</span
+                    >
+                    <div
+                        id="greeting"
+                        class="text-xl font-semibold tracking-wide whitespace-nowrap"
+                    >
+                        --
+                    </div>
+                    <button
+                        class="status-delete-btn hidden absolute -top-2 -right-2 w-6 h-6 rounded-full bg-[#FF5555] text-white text-xs font-bold hover:scale-110 transition z-10"
+                    >
+                        ✕
+                    </button>
+                </div>
+
+                <div
+                    class="status-widget relative bg-[#24283B] rounded-2xl p-4 flex flex-col items-center min-w-[140px]"
+                >
+                    <span
+                        class="text-[10px] font-bold uppercase tracking-widest mb-1"
+                        >time</span
+                    >
+                    <div
+                        id="time"
+                        class="text-xl font-semibold tracking-wide whitespace-nowrap"
+                    >
+                        --:--
+                    </div>
+                    <button
+                        class="status-delete-btn hidden absolute -top-2 -right-2 w-6 h-6 rounded-full bg-[#FF5555] text-white text-xs font-bold hover:scale-110 transition z-10"
+                    >
+                        ✕
+                    </button>
+                </div>
+
+                <div
+                    class="status-widget relative bg-[#24283B] rounded-2xl p-4 flex flex-col items-center min-w-[140px]"
+                >
+                    <span
+                        class="text-[10px] font-bold uppercase tracking-widest mb-1"
+                        >day</span
+                    >
+                    <div
+                        id="day"
+                        class="text-xl font-semibold tracking-wide whitespace-nowrap"
+                    >
+                        --
+                    </div>
+                    <button
+                        class="status-delete-btn hidden absolute -top-2 -right-2 w-6 h-6 rounded-full bg-[#FF5555] text-white text-xs font-bold hover:scale-110 transition z-10"
+                    >
+                        ✕
+                    </button>
+                </div>
+
+                <div
+                    class="status-widget relative bg-[#24283B] rounded-2xl p-4 flex flex-col items-center min-w-[140px]"
+                >
+                    <span
+                        class="text-[10px] font-bold uppercase tracking-widest mb-1"
+                        >date</span
+                    >
+                    <div id="date" class="text-xl font-semibold tracking-wide">
+                        -- -- ,----
+                    </div>
+                    <button
+                        class="status-delete-btn hidden absolute -top-2 -right-2 w-6 h-6 rounded-full bg-[#FF5555] text-white text-xs font-bold hover:scale-110 transition z-10"
+                    >
+                        ✕
+                    </button>
+                </div>
+
+                <button
+                    id="add-widget-btn"
+                    class="hidden bg-[#1A1B26]/80 hover:bg-[#9ECE6A]/20 rounded-2xl p-4 flex gap-2 items-center justify-center min-w-35 text-[#9ECE6A] transition cursor-pointer shrink-0"
+                >
+                    <span class="material-symbols-outlined text-[20px]!"
+                        >add_circle</span
+                    >
+                    <span class="text-sm font-bold uppercase tracking-widest"
+                        >Widget</span
+                    >
+                </button>
+            </section>
+
+            <section
+                id="section-links"
+                class="w-full max-w-lg flex flex-col h-[380px] shrink-0"
+            >
+                <div class="px-2 mb-2 w-full">
+                    <div
+                        id="category-tabs"
+                        class="flex gap-2 overflow-x-auto hide-scrollbar pt-3 pb-2 px-2"
+                    ></div>
+                </div>
+
+                <div class="w-full px-4 flex-1 overflow-hidden">
+                    <div
+                        id="app-grid"
+                        class="grid grid-cols-4 gap-4 overflow-y-auto h-full hide-scrollbar pt-2 pb-2 content-start"
+                    ></div>
+                </div>
+            </section>
+
+            <section
+                id="section-search"
+                class="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-full max-w-lg px-4"
+            >
+                <form
+                    id="search-form"
+                    class="flex items-center w-full gap-3 transition-all"
+                >
+                    <div class="relative flex items-center z-50">
+                        <button
+                            type="button"
+                            id="dropdown-btn"
+                            class="flex items-center gap-1 bg-[#24283B] rounded-3xl font-bold text-sm outline-none pl-4 pr-3 py-3 hover:text-[#7AA2F7] transition-colors focus:ring-0"
+                        >
+                            <span id="selected-engine-text">Google</span>
+                            <span class="material-symbols-outlined text-[16px]!"
+                                >expand_more</span
+                            >
+                        </button>
+
+                        <div
+                            id="dropdown-menu"
+                            class="absolute left-0 bottom-full mb-3 w-36 bg-[#24283B] rounded-xl overflow-hidden hidden flex-col"
+                        >
+                            <button
+                                type="button"
+                                class="engine-option px-4 py-3 text-left text-sm font-bold hover:bg-[#BB9AF7] hover:text-[#24283B] transition-colors"
+                                data-value="https://www.google.com/search?q="
+                                data-name="Google"
+                            >
+                                Google
+                            </button>
+                            <button
+                                type="button"
+                                class="engine-option px-4 py-3 text-left text-sm font-bold hover:bg-[#BB9AF7] hover:text-[#24283B] transition-colors"
+                                data-value="https://duckduckgo.com/?q="
+                                data-name="DuckDuckGo"
+                            >
+                                DuckDuckGo
+                            </button>
+                            <button
+                                type="button"
+                                class="engine-option px-4 py-3 text-left text-sm font-bold hover:bg-[#BB9AF7] hover:text-[#24283B] transition-colors"
+                                data-value="https://www.youtube.com/results?search_query="
+                                data-name="Youtube"
+                            >
+                                Youtube
+                            </button>
+                            <button
+                                type="button"
+                                class="engine-option px-4 py-3 text-left text-sm font-bold hover:bg-[#BB9AF7] hover:text-[#24283B] transition-colors"
+                                data-value="https://www.reddit.com/search/?q="
+                                data-name="Reddit"
+                            >
+                                Reddit
+                            </button>
+                        </div>
+                    </div>
+
+                    <input
+                        type="hidden"
+                        id="search-engine-value"
+                        value="https://www.google.com/search?q="
+                    />
+
+                    <div
+                        class="flex flex-1 items-center bg-[#24283B] rounded-3xl px-4 py-3 transition-all"
+                    >
+                        <input
+                            type="text"
+                            id="search-input"
+                            placeholder="Search..."
+                            autocomplete="off"
+                            autofocus
+                            class="bg-transparent w-full outline-none placeholder-[#9AA5CE] text-sm text-[#F8F8F2]"
+                        />
+                        <button type="submit" class="hidden"></button>
+                        <span
+                            class="material-symbols-outlined text-[16px]! select-none pointer-events-none text-[#9AA5CE]"
+                            >search</span
+                        >
+                    </div>
+                </form>
+            </section>
+
+            <div
+                id="add-modal"
+                class="fixed inset-0 flex items-center justify-center z-50 hidden bg-[#1A1B26]/80"
+            >
+                <div class="bg-[#BB9AF7]/90 rounded-2xl p-6 w-80">
+                    <div
+                        class="text-center text-[#1A1B26] text-xl font-bold mb-4"
+                    >
+                        Add Link
+                    </div>
+                    <input
+                        type="text"
+                        id="link-name"
+                        placeholder="Name"
+                        class="w-full mb-3 p-2 rounded bg-[#24283B] outline-0"
+                    />
+                    <input
+                        type="text"
+                        id="link-url"
+                        placeholder="Url"
+                        class="w-full mb-3 p-2 rounded bg-[#24283B] outline-0"
+                    />
+                    <div class="flex gap-2">
+                        <button
+                            id="save-modal"
+                            class="flex-1 py-2 rounded bg-[#24283B] hover:bg-[#9ECE6A] hover:text-[#24283B] transition-all font-bold"
+                        >
+                            Save
+                        </button>
+                        <button
+                            id="cancel-modal"
+                            class="flex-1 py-2 rounded bg-[#24283B] hover:bg-[#F7768E] hover:text-[#24283B] transition-all font-bold"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                id="add-cat-modal"
+                class="fixed inset-0 flex items-center justify-center z-50 hidden bg-[#1A1B26]/80"
+            >
+                <div class="bg-[#BB9AF7]/90 rounded-2xl p-6 w-80">
+                    <span
+                        class="text-center text-xl text-[#24283B] font-bold mb-4 block"
+                        >Add Category</span
+                    >
+                    <input
+                        type="text"
+                        id="category-name"
+                        placeholder="Category Name"
+                        class="w-full mb-4 p-2 rounded bg-[#24283B] outline-0"
+                    />
+                    <div class="flex gap-2">
+                        <button
+                            id="save-cat-modal"
+                            class="flex-1 py-2 rounded bg-[#24283B] hover:bg-[#9ECE6A] hover:text-[#24283B] transition-all font-bold"
+                        >
+                            Save
+                        </button>
+                        <button
+                            id="cancel-cat-modal"
+                            class="flex-1 py-2 rounded bg-[#24283B] hover:bg-[#F7768E] hover:text-[#24283B] transition-all font-bold"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                id="delete-modal"
+                class="fixed inset-0 flex items-center justify-center z-50 hidden bg-[#24283B]/80"
+            >
+                <div class="bg-[#BB9AF7] rounded-2xl p-6 w-80 text-center">
+                    <div class="text-xl text-[#24283B] font-bold mb-2">
+                        Delete Link?
+                    </div>
+                    <p class="text-sm text-[#24283B] mb-6">Are you sure?</p>
+                    <div class="flex gap-2">
+                        <button
+                            id="confirm-delete-btn"
+                            class="flex-1 py-2 rounded bg-[#24283B] text-white hover:bg-[#F7768E] transition-all font-bold"
+                        >
+                            Delete
+                        </button>
+                        <button
+                            id="cancel-delete-btn"
+                            class="flex-1 py-2 rounded bg-[#24283B] text-white hover:bg-[#9AA5CE] transition-all font-bold"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <script src="../src/main.js"></script>
+    </body>
+</html>
